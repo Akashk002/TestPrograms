@@ -1,20 +1,51 @@
-// TestPrograms.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+using namespace std;
 
-int main()
+// Function to sort the array using insertion sort algorithm.
+void processSelectionSort(int arr[], int n)
 {
-	std::cout << "Hello World!\n";
+	for (int i = 0; i < n - 1; i++)
+	{
+		int minIndex = i;
+		for (int j = i + 1; j < n; j++)
+		{
+			if (arr[j] < arr[minIndex])
+			{
+				minIndex = j;
+			}
+		}
+
+		swap(arr[i], arr[minIndex]);
+	}
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+void displayArray(int arr[], int n) {
+	for (int i = 0; i < n; i++) {
+		cout << arr[i] << " ";
+	}
+	cout << endl;
+}
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+// Function to dynamically allocate an array and fill it with random values.
+void fillDynamicArrayWithRandomValues(int** arr, int* n) {
+	cout << "Enter the size of the array: ";
+	cin >> *n;
+	*arr = new int[*n];
+	srand(time(0)); // Seed for random number generation
+	for (int i = 0; i < *n; i++) {
+		(*arr)[i] = rand() % 1000; // Fill with random numbers between 0 and 999
+	}
+}
+
+int main() {
+	int* arr;
+	int n;
+	fillDynamicArrayWithRandomValues(&arr, &n);
+	cout << "Unsorted array: ";
+	displayArray(arr, n);
+	processSelectionSort(arr, n);
+	cout << "Sorted array: ";
+	displayArray(arr, n);
+	delete[] arr; // Deallocate dynamically allocated memory
+	return 0;
+}
